@@ -37,8 +37,8 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased}
-#wrap{position:fixed;inset:0;display:grid;place-items:center}
-#stage{position:relative;width:1600px;height:900px;transform-origin:center center;overflow:hidden;
+#wrap{position:fixed;inset:0;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center;transform:translate(-50%,-50%);overflow:hidden;
   background:radial-gradient(1200px 700px at 85% -10%,#15244A 0%,transparent 60%),radial-gradient(900px 600px at -10% 110%,#0F2A3A 0%,transparent 55%),linear-gradient(160deg,var(--bg2),var(--bg) 70%)}
 /* الانتقال بين الشرائح: تلاشٍ هادئ فقط، بلا انزلاق ولا اهتزاز */
 .slide{position:absolute;inset:0;padding:46px 80px 0;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s .6s}
@@ -636,7 +636,7 @@ let tx = null;
 document.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
 document.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(cur + (dx > 0 ? 1 : -1)); tx = null; });
 
-function fit(){ const s = Math.min(innerWidth / 1600, innerHeight / 900); document.getElementById('stage').style.transform = `scale(${s})`; }
+function fit(){ const s = Math.min(innerWidth / 1600, innerHeight / 900); document.getElementById('stage').style.transform = `translate(-50%,-50%) scale(${s})`; }
 addEventListener('resize', fit); fit();
 
 const h0 = parseInt((location.hash || '').slice(1));
