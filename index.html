@@ -238,6 +238,17 @@ svg text{font-family:var(--font)}
 .sm .rn{display:flex;gap:6px}
 .sm .rn b{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;font-size:16px;background:rgba(52,211,153,.16);color:var(--green)}
 .smar{text-align:center;color:var(--dim);font-size:15px;line-height:1;padding:3px 0}
+
+/* لون الفصل */
+.slide{isolation:isolate}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:10px;background:var(--dc,transparent);z-index:2;box-shadow:0 0 28px color-mix(in srgb,var(--dc,transparent) 70%,transparent)}
+.slide::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(1200px 600px at 100% 0%,color-mix(in srgb,var(--dc,transparent) 30%,transparent),transparent 72%),
+             linear-gradient(180deg,color-mix(in srgb,var(--dc,transparent) 10%,transparent),transparent 45%)}
+.slide .sec{font-size:20px;padding:7px 20px}
+.slide .sec{color:var(--ink);border-color:color-mix(in srgb,var(--dc,#8A8F98) 60%,transparent);background:color-mix(in srgb,var(--dc,#8A8F98) 18%,transparent);font-weight:600}
+.slide .sec i{background:var(--dc,#8A8F98)}
+#trk span.on{border-color:var(--tc,var(--line));background:color-mix(in srgb,var(--tc,#fff) 22%,transparent);color:#fff}
 @keyframes glow{0%,100%{text-shadow:0 0 0 rgba(255,107,107,0)}50%{text-shadow:0 0 26px rgba(255,107,107,.75)}}
 @keyframes breathe{0%,100%{opacity:1}50%{opacity:.3}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -615,6 +626,9 @@ const TRK = ['المقدمة', 'البعد التسويقي', 'البعد الا
 const SHORT = {'المقدمة':'المقدمة','البعد التسويقي':'التسويقي','البعد الاستراتيجي':'الاستراتيجي','البعد المالي':'المالي','الخاتمة':'الخاتمة'};
 document.getElementById('trk').innerHTML = TRK.map((t, i) => `<span data-s="${t}">${SHORT[t]}</span>${i < TRK.length-1 ? '<em>‹</em>' : ''}`).join('');
 const trk = Array.from(document.querySelectorAll('#trk span'));
+const SECC = {'المقدمة':'#B8C2D9','البعد التسويقي':C.mk,'البعد الاستراتيجي':C.st,'البعد المالي':C.fn,'الخاتمة':C.green};
+els.forEach((e, k) => { const s = ALL[k]; if (s.kind === 'cover' || s.kind === 'end') return; e.style.setProperty('--dc', s.backup ? '#7884A0' : (SECC[s.sec] || '#7884A0')); });
+trk.forEach(t => t.style.setProperty('--tc', SECC[t.dataset.s]));
 
 function countUp(root){
   root.querySelectorAll('.cu').forEach(el => {
